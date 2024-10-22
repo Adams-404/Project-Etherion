@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hacker's Quest</title>
+    <style>
+        :root {
+            --bg-color: #000000;
+            --text-color: #00ff00;
+            --input-bg: #0a0a0a;
+            --border-color: #00ff00;
+            --nav-bg: #0a0a0a;
+        }
+
+        .light-mode {
+            --bg-color: #f0f0f0;
+            --text-color: #0a0a0a;
+            --input-bg: #ffffff;
+            --border-color: #1a1a1a;
+            --nav-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        nav {
+            background-color: var(--nav-bg);
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+        }
+
+        .burger {
+            display: none;
+            cursor: pointer;
+        }
+
+        .burger div {
+            width: 25px;
+            height: 2px;
+            background-color: var(--text-color);
+            margin: 5px 0;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        #game-text {
+            height: 300px;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: var(--input-bg);
+        }
+
+        #game-text p {
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+        }
+
+        #user-input {
+            width: 97%;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+        }
+
+        #submit-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: var(--text-color);
+            color: var(--bg-color);
+            border: none;
+            cursor: pointer;
+        }
+
+        .command-boxes {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .command-box {
+            flex: 1;
+            margin: 0 5px;
+            padding: 10px;
+            background-color: var(--input-bg);
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #00ff00;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--text-color);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: var(--bg-color);
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            width: 80%;
+            max-width: 600px;
+        }
+
+        .close {
+            color: var(--text-color);
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        @media screen and (max-width: 600px) {
+            .burger {
+                display: block;
+            }
+            
+            #user-input {
+                width: 95%;
+            }
+
+            nav ul {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
+                position: absolute;
+                top: 50px;
+                left: 0;
+                background-color: var(--nav-bg);
+            }
+
+            nav ul.show {
+                display: flex;
+            }
+
+            nav ul li {
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="burger">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <ul>
+            <li><a href="#" id="about-link">About</a></li>
+            <li><a href="#" id="help-link">Help</a></li>
+        </ul>
+        <label class="switch">
+            <input type="checkbox" id="mode-toggle">
+            <span class="slider"></span>
+        </label>
+    </nav>
+
+    <div class="container">
+        <h1>Hacker's Quest</h1>
+        <div class="command-boxes">
+            <div class="command-box" id="command1"></div>
+            <div class="command-box" id="command2"></div>
+            <div class="command-box" id="command3"></div>
+        </div>
+        <div id="game-text"></div>
+        <input type="text" id="user-input" placeholder="Enter your command...">
+        <button id="submit-btn">Execute</button>
+    </div>
+
+    <div id="about-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>About Hacker's Quest</h2>
+            <p>Hacker's Quest is a text-based adventure game developed by Adams Cyber, where you play as a skilled hacker navigating through various challenges and missions. Use your wit and hacking skills to progress through the levels and uncover the secrets hidden within the digital realm.</p>
+        </div>
+    </div>
+
+    <div id="help-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Help</h2>
+            <p>To play Hacker's Quest:</p>
+            <ol>
+                <li>Read the description of your current situation in the game text area.</li>
+                <li>Choose a command from the options displayed in the command boxes, or type your own command.</li>
+                <li>Enter your chosen command in the input field and click "Execute" or press Enter.</li>
+                <li>Read the outcome of your action and continue making choices to progress through the game.</li>
+            </ol>
+            <p>Your progress is automatically saved every 10 levels. Be careful, some choices may lead to game over!</p>
+        </div>
+    </div>
+
+    <script>
+        const gameText = document.getElementById('game-text');
+        const userInput = document.getElementById('user-input');
+        const submitBtn = document.getElementById('submit-btn');
+        const modeToggle = document.getElementById('mode-toggle');
+        const commandBoxes = [
+            document.getElementById('command1'),
+            document.getElementById('command2'),
+            document.getElementById('command3')
+        ];
+        const burger = document.querySelector('.burger');
+        const nav = document.querySelector('nav ul');
+        const aboutLink = document.getElementById('about-link');
+        const helpLink = document.getElementById('help-link');
+        const aboutModal = document.getElementById('about-modal');
+        const helpModal = document.getElementById('help-modal');
+        const closeBtns = document.getElementsByClassName('close');
+
+        let currentLevel = 1;
+
+        const levels = {
+            1: {
+                description: "You find yourself in a dimly lit room. A flickering screen illuminates the space.",
+                commands: ['boot system', 'check surroundings', 'access terminal'],
+                outcomes: {
+                    'boot system': 2,
+                    'check surroundings': 'You notice a dusty keyboard and a worn-out chair.',
+                    'access terminal': 'The terminal requires a password. You\'re not ready yet.'
+                }
+            },
+            2: {
+                description: "The system whirs to life. A command prompt blinks, waiting for input.",
+                commands: ['run diagnostics', 'check network', 'open firewall'],
+                outcomes: {
+                    'run diagnostics': 'All systems operational. No anomalies detected.',
+                    'check network': 3,
+                    'open firewall': 'Access denied. Security protocols are still active.'
+                }
+            },
+            3: {
+                description: "You're connected to a vast network. Multiple nodes are visible.",
+                commands: ['scan nodes', 'trace route', 'initiate handshake'],
+                outcomes: {
+                    'scan nodes': 'You detect three active nodes: Alpha, Beta, and Gamma.',
+                    'trace route': 4,
+                    'initiate handshake': 'Handshake failed. The network is heavily secured.'
+                }
+            },
+            4: {
+                description: "The route leads to a heavily guarded server. A firewall blocks your path.",
+                commands: ['brute force', 'find exploit', 'retreat'],
+                outcomes: {
+                    'brute force': 'GAME OVER',
+                    'find exploit': 5,
+                    'retreat': 3
+                }
+            },
+            5: {
+                description: "You've found a vulnerability in the firewall. The server is now accessible.",
+                commands: ['download data', 'plant backdoor', 'cover tracks'],
+                outcomes: {
+                    'download data': 6,
+                    'plant backdoor': 'Backdoor planted successfully. Future access guaranteed.',
+                    'cover tracks': 'You erase all traces of your presence.'
+                }
+            },        
+            
+    
+    6: {
+        description: "Data downloaded successfully. Suddenly, you detect someone tracing your location. You realize you're being watched.",
+        commands: ['encrypt flash drive', 'delete traces', 'find exit'],
+        outcomes: {
+            'encrypt flash drive': 'Flash drive encrypted. The data is secure.',
+            'delete traces': 'All traces of your presence are erased.',
+            'find exit': 7
+        }
+    },
+    7: {
+        description: "You've found a door leading out of the room. As you enter the next room, you spot a hard drive on a desk.",
+        commands: ['take hard drive', 'examine room', 'continue forward'],
+        outcomes: {
+            'take hard drive': 8,
+            'examine room': 'You find a note with "404" written on it.',
+            'continue forward': 9
+        }
+    },
+    8: {
+        description: "You've acquired the hard drive. It has 'Cyber' etched on its surface.",
+        commands: ['connect hard drive', 'hide hard drive', 'check for pursuers'],
+        outcomes: {
+            'connect hard drive': 'GAME OVER',
+            'hide hard drive': 9,
+            'check for pursuers': 'You hear footsteps in the distance. Time is running out.'
+        }
+    },
+    9: {
+        description: "You enter a corridor with multiple doors. One door has 'Adams' written on it.",
+        commands: ['enter adams room', 'try locked door', 'follow exit signs'],
+        outcomes: {
+            'enter Adams room': 10,
+            'try locked door': 'The door wont budge. You hear alarms in the distance.',
+            'follow exit signs': 11
+        }
+    },
+    10: {
+        description: "Inside Adams' room, you find a terminal with a login screen.",
+        commands: ['login as adams', 'search desk', 'leave room'],
+        outcomes: {
+            'login as Adams': 'Access granted. You find a file named "404_Cyber_Adams".',
+            'search desk': 'You find a keycard hidden in a drawer.',
+            'leave room': 11
+        }
+    },
+    11: {
+        description: "You reach a security checkpoint. A guard is sleeping at his post.",
+        commands: ['sneak past', 'use keycard', 'create distraction'],
+        outcomes: {
+            'sneak past': 12,
+            'use keycard': 'The keycard grants you access to a restricted area.',
+            'create distraction': 'GAME OVER'
+        }
+    },
+    12: {
+        description: "You've entered a large open office space. You spot someone hiding behind a cubicle.",
+        commands: ['approach person', 'hide and observe', 'call out'],
+        outcomes: {
+            'approach person': 13,
+            'hide and observe': 'You see the person is also carrying a flash drive.',
+            'call out': 'GAME OVER'
+        }
+    },
+    13: {
+        description: "The person introduces themselves as Alex, another hacker trapped in the building.",
+        commands: ['share information', 'ask about exit', 'suggest cooperation'],
+        outcomes: {
+            'share information': 'Alex reveals they know part of a code: "Echo_"',
+            'ask about exit': 'Alex mentions a heavily guarded elevator on the top floor.',
+            'suggest cooperation': 14
+        }
+    },
+    14: {
+        description: "You and Alex decide to work together. You hear guards approaching.",
+        commands: ['hide together', 'split up', 'confront guards'],
+        outcomes: {
+            'hide together': 15,
+            'split up': 16,
+            'confront guards': 'GAME OVER'
+        }
+    },
+    15: {
+        description: "You and Alex successfully evade the guards. Alex suggests checking the server room for more information.",
+        commands: ['go to server room', 'search for another exit', 'wait for guards to leave'],
+        outcomes: {
+            'go to server room': 17,
+            'search for another exit': 18,
+            'wait for guards to leave': 'The guards discover you. GAME OVER'
+        }
+    },
+    16: {
+        description: "You've split up from Alex. You find yourself in a laboratory filled with strange equipment.",
+        commands: ['examine equipment', 'look for clues', 'try to contact Alex'],
+        outcomes: {
+            'examine equipment': 'You find a device labeled "Quantum Encoder".',
+            'look for clues': 'You discover a note with "Foxtrot" written on it.',
+            'try to contact Alex': 19
+        }
+    },
+    17: {
+        description: "In the server room, you find a terminal with high-level access.",
+        commands: ['download building schematics', 'check security feeds', 'access employee records'],
+        outcomes: {
+            'download building schematics': 'You now have a map of the entire facility.',
+            'check security feeds': 'You spot another hacker on the cameras.',
+            'access employee records': 20
+        }
+    },
+    18: {
+        description: "You've found a maintenance shaft that might lead to an exit.",
+        commands: ['enter shaft', 'check shaft safety', 'look for tools'],
+        outcomes: {
+            'enter shaft': 21,
+            'check shaft safety': 'The shaft seems stable enough to climb.',
+            'look for tools': 'You find a multi-tool that might come in handy.'
+        }
+    },
+    19: {
+        description: "You've reestablished contact with Alex. They've found another hacker named Sam.",
+        commands: ['meet up with Alex and Sam', 'share your findings', 'continue solo'],
+        outcomes: {
+            'meet up with Alex and Sam': 22,
+            'share your findings': 'You exchange information about the codes you have found.',
+            'continue solo': 23
+        }
+    },
+    20: {
+        description: "The employee records reveal a list of code names. One stands out: 'Ghostwriter'.",
+        commands: ['investigate ghostwriter', 'cross-reference with building schematics', 'logout and move on'],
+        outcomes: {
+            'investigate ghostwriter': 'Ghostwriter seems to be a top-level operative.',
+            'cross-reference with building schematics': 'You find a hidden room marked on the schematics.',
+            'logout and move on': 24
+        }
+    },
+    21: {
+        description: "The maintenance shaft leads you to a restricted floor. You see a sign: 'Project Echo'.",
+        commands: ['explore Project Echo', 'find a way down', 'search for more clues'],
+        outcomes: {
+            'explore Project Echo': 25,
+            'find a way down': 'You find an elevator, but it requires a special key.',
+            'search for more clues': 'You find a document mentioning "Foxtrot_Echo".'
+        }
+    },
+    22: {
+        description: "You've joined Alex and Sam. Sam reveals they were hired to test the building's security.",
+        commands: ['share your mission', 'ask about Sams findings', 'plan next move'],
+        outcomes: {
+            'share your mission': 'Sam seems suspicious of your true intentions.',
+            'ask about Sams findings': 'Sam has discovered part of the code: "Tango"',
+            'plan next move': 26
+        }
+    },
+    23: {
+        description: "Continuing alone, you stumble upon a high-security vault.",
+        commands: ['attempt to crack vault', 'search for vault key', 'bypass vault'],
+        outcomes: {
+            'attempt to crack vault': 'GAME OVER',
+            'search for vault key': 'You find a key card hidden behind a loose panel.',
+            'bypass vault': 27
+        }
+    },
+    24: {
+        description: "You've reached a communication center. Multiple screens show various parts of the building.",
+        commands: ['contact outside help', 'monitor guard movements', 'access main computer'],
+        outcomes: {
+            'contact outside help': 'GAME OVER',
+            'monitor guard movements': 'You identify a safe route to the upper floors.',
+            'access main computer': 28
+        }
+    },
+    25: {
+        description: "Project Echo appears to be an advanced AI system. A terminal prompts for a password.",
+        commands: ['attempt to hack', 'search for password clues', 'shut down the system'],
+        outcomes: {
+            'attempt to hack': 'The system counterattacks, almost compromising your position.',
+            'search for password clues': 'You find a sticky note with "Foxtrot_Echo_Tango" written on it.',
+            'shut down the system': 29
+        }
+    },
+    26: {
+        description: "Your group decides to head to the top floor. You encounter a biometric security gate.",
+        commands: ['use Sams credentials', 'hack the gate', 'find another way'],
+        outcomes: {
+            'use Sams credentials': 'Sams credentials work, but trigger a silent alarm.',
+            'hack the gate': 30,
+            'find another way': 'You discover a maintenance tunnel leading upwards.'
+        }
+    },
+    27: {
+        description: "Beyond the vault, you find a room filled with servers. A screen displays: 'Quantum Encryption Active'.",
+        commands: ['attempt decryption', 'search for encryption keys', 'upload virus'],
+        outcomes: {
+            'attempt decryption': 'GAME OVER',
+            'search for encryption keys': 'You find a file labeled "Adams_Tango_404".',
+            'upload virus': 31
+        }
+    },
+    28: {
+        description: "The main computer grants you access to the building's core systems.",
+        commands: ['disable security', 'download classified files', 'trace ghostwriter'],
+        outcomes: {
+            'disable security': 'Alarms blare as the system detects your intrusion. GAME OVER',
+            'download classified files': 'You obtain files mentioning "Project Omega".',
+            'trace ghostwriter': 32
+        }
+    },
+    29: {
+        description: "As you shut down Project Echo, the building's power fluctuates. Emergency lights activate.",
+        commands: ['restore power', 'use blackout to move', 'wait for backup systems'],
+        outcomes: {
+            'restore power': 'You restore power, but alert the security team. GAME OVER',
+            'use blackout to move': 33,
+            'wait for backup systems': 'Backup power comes online, revealing your position. GAME OVER'
+        }
+    },
+    30: {
+        description: "You've successfully hacked the gate. Beyond, you see a sign for 'Project Omega'.",
+        commands: ['investigate Project Omega', 'continue to top floor', 'secure the area'],
+        outcomes: {
+            'investigate Project Omega': 34,
+            'continue to top floor': 35,
+            'secure the area': 'You set up a temporary safe zone.'
+        }
+    },
+    31: {
+        description: "Your virus has created a backdoor in the quantum encryption. You notice a file named 'Ghostwriter_Protocol'.",
+        commands: ['open ghostwriter_Protocol', 'use backdoor to escape', 'delete all data'],
+        outcomes: {
+            'open ghostwriter_Protocol': 'The protocol reveals the true nature of your mission.',
+            'use backdoor to escape': 36,
+            'delete all data': 'You erase all traces, but trigger a system-wide alert. GAME OVER'
+        }
+    },
+    32: {
+        description: "You've traced Ghostwriter to a hidden floor above. The elevator needs a final code.",
+        commands: ['input known code fragments', 'hack elevator override', 'use stairs'],
+        outcomes: {
+            'input known code fragments': 37,
+            'hack elevator override': 'The override fails, trapping you. GAME OVER',
+            'use stairs': 'You find the stairs are blocked and alarmed.'
+        }
+    },
+    33: {
+        description: "Using the blackout, you've reached a secure floor. You hear voices discussing 'Omega Protocol'.",
+        commands: ['eavesdrop on conversation', 'sneak past', 'confront speakers'],
+        outcomes: {
+            'eavesdrop on conversation': 'You learn that Omega Protocol is the final failsafe.',
+            'sneak past': 38,
+            'confront speakers': 'GAME OVER'
+        }
+    },
+    34: {
+        description: "Project Omega appears to be a global cybersecurity initiative. Your flash drive might be the key.",
+        commands: ['insert flash drive', 'search for more info', 'attempt to shut down Omega'],
+        outcomes: {
+            'insert flash drive': 39,
+            'search for more info': 'You find documents linking Ghostwriter to Omega.',
+            'attempt to shut down Omega': 'The system locks you out. Alarms blare. GAME OVER'
+        }
+    },
+    35: {
+        description: "You've reached the top floor. A lone figure stands before a massive screen - it's Ghostwriter.",
+        commands: ['confront ghostwriter', 'try to sneak past', 'offer to join forces'],
+        outcomes: {
+            'confront ghostwriter': 'Ghostwriter reveals they have been testing you all along.',
+            'try to sneak past': 'Ghostwriter spots you. I have been expecting you.',
+            'offer to join forces': 39
+        }
+    
+    },
+    36: {
+        description: "The backdoor leads you to a hidden network. You see options to 'Activate Omega' or 'Purge System'.",
+        commands: ['activate Omega', 'purge system', 'extract all data'],
+        outcomes: {
+            'activate Omega': 'Omega activates, revealing a global cybersecurity grid.',
+            'purge system': 'You trigger a worldwide system reset. The consequences are unknown.',
+            'extract all data': 39
+        }
+    },
+    37: {
+        description: "The elevator accepts the code: '404_Cyber_Adams_Echo_Foxtrot_Tango'. You ascend to Ghostwriter's level.",
+        commands: ['step out of elevator', 'call out to Ghostwriter', 'check surroundings'],
+        outcomes: {
+            'step out of elevator': 'You come face to face with Ghostwriter.',
+            'call out to Ghostwriter': 'A voice responds: "Welcome to Omega, initiate."',
+            'check surroundings': 'You are in a massive control room overlooking a global network map.'
+        }
+    },
+    38: {
+        description: "You've sneaked into what seems to be the heart of the facility. Ghostwriter stands at a control panel.",
+        commands: ['approach Ghostwriter', 'activate Omega Protocol', 'wipe all systems'],
+        outcomes: {
+            'approach Ghostwriter': 'Ghostwriter turns to you, "You have passed the final test."',
+            'activate Omega Protocol': 'Omega comes online, redefining global cybersecurity.',
+            'wipe all systems': 'You attempt to wipe everything, but Ghostwriter stops you.'
+        }
+    },
+    39: {
+        description: "Ghostwriter reveals the truth: this was all a test. You're now faced with a choice that will affect global cybersecurity.",
+        commands: ['join Omega initiative', 'oppose Omega', 'suggest alternative'],
+        outcomes: {
+            'join Omega initiative': 'You become part of a elite cybersecurity team, protecting the digital world.',
+            'oppose Omega': 'You go rogue, determined to expose Omega to the world.',
+            'suggest alternative': 'Your unique perspective leads to a reformed, more ethical Omega Protocol.'
+        }
+    }
+
+};
+        function updateCommandBoxes() {
+            const commands = levels[currentLevel].commands;
+            commandBoxes.forEach((box, index) => {
+                box.textContent = commands[index] || '';
+            });
+        }
+
+        function appendToGameText(text, isUserInput = false) {
+            const newParagraph = document.createElement('p');
+            gameText.appendChild(newParagraph);
+            if (isUserInput) {
+                newParagraph.textContent = `> ${text}`;
+            } else {
+                typeWriter(newParagraph, text, 0);
+            }
+            gameText.scrollTop = gameText.scrollHeight;
+        }
+
+        function typeWriter(element, text, index) {
+            if (index < text.length) {
+                element.textContent += text.charAt(index);
+                setTimeout(() => typeWriter(element, text, index + 1), 25);
+            }
+        }
+
+        function handleCommand(command) {
+            appendToGameText(command, true);
+            
+            const outcome = levels[currentLevel].outcomes[command];
+            if (typeof outcome === 'number') {
+                currentLevel = outcome;
+                appendToGameText(levels[currentLevel].description);
+            } else if (outcome === 'GAME OVER') {
+                appendToGameText("GAME OVER. Your journey ends here.");
+                resetGame();
+            } else if (outcome === 'disconnect') {
+        appendToGameText("WARNING: Disconnecting prematurely may result in loss of progress and valuable data.");
+        setTimeout(() => {
+            appendToGameText("Connection terminated. You've been forcefully ejected from the system.");
+            setTimeout(() => {
+                appendToGameText("As the screen goes dark, you realize the gravity of your decision...");
+                setTimeout(() => {
+                    resetGame();
+            10 }, 7000);
+            }, 3500);
+        }, 5000);
+            } else if (outcome) {
+                appendToGameText(outcome);
+            } else {
+                appendToGameText("Invalid command. Try again.");
+            }
+
+            updateCommandBoxes();
+            
+            if (currentLevel % 10 === 0) {
+                saveProgress();
+                appendToGameText("Progress saved!");
+            }
+        }
+
+        function saveProgress() {
+            localStorage.setItem('hackerQuestLevel', currentLevel);
+        }
+
+        function loadProgress() {
+            const savedLevel = localStorage.getItem('hackerQuestLevel');
+            if (savedLevel) {
+                currentLevel = parseInt(savedLevel);
+                appendToGameText(`Welcome back! Resuming from level ${currentLevel}.`);
+                appendToGameText(levels[currentLevel].description);
+                updateCommandBoxes();
+            } else {
+                initializeGame();
+            }
+        }
+
+        function resetGame() {
+            currentLevel = 1;
+            localStorage.removeItem('hackerQuestLevel');
+            gameText.innerHTML = '';
+            initializeGame();
+        }
+
+        function initializeGame() {
+            const loadingElement = document.createElement('p');
+            gameText.appendChild(loadingElement);
+            loadingElement.textContent = "Initializing Hacker's Quest";
+            
+            let dots = 0;
+            const loadingInterval = setInterval(() => {
+                loadingElement.textContent = "Initializing Hacker's Quest" + ".".repeat(dots % 4);
+                dots++;
+            }, 500);
+
+            setTimeout(() => {
+                clearInterval(loadingInterval);
+                loadingElement.textContent = "Initializing Hacker's Quest....";
+                
+                setTimeout(() => {
+                    appendToGameText("Welcome to Hacker's Quest. You've been chosen.");
+                    
+                    setTimeout(() => {
+                        appendToGameText("You wake up in a dark room, disoriented and confused.");
+                        
+                        setTimeout(() => {
+                            appendToGameText("As your eyes adjust to the darkness, you begin to wonder...");
+                            
+                            setTimeout(() => {
+                                appendToGameText("What is this place? What am I doing here?");
+                                
+                                setTimeout(() => {
+                                    appendToGameText(levels[currentLevel].description);
+                                    updateCommandBoxes();
+                                }, 5000);
+                            }, 5000);
+                        }, 5000);
+                    }, 5000);
+                }, 1000);
+            }, 10000);
+        }
+
+        submitBtn.addEventListener('click', () => {
+            const command = userInput.value.trim().toLowerCase();
+            if (command !== '') {
+                handleCommand(command);
+                userInput.value = '';
+            }
+        });
+
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                submitBtn.click();
+            }
+        });
+
+        
+
+        modeToggle.addEventListener('change', () => {
+            document.body.classList.toggle('light-mode');
+        });
+
+        burger.addEventListener('click', () => {
+            nav.classList.toggle('show');
+        });
+
+        function openModal(modal) {
+            modal.style.display = "block";
+        }
+
+        function closeModal(modal) {
+            modal.style.display = "none";
+        }
+
+        aboutLink.onclick = () => openModal(aboutModal);
+        helpLink.onclick = () => openModal(helpModal);
+
+        for (let closeBtn of closeBtns) {
+            closeBtn.onclick = function() {
+                closeModal(this.parentElement.parentElement);
+            }
+        }
+
+        window.onclick = (event) => {
+            if (event.target == aboutModal) {
+                closeModal(aboutModal);
+            }
+            if (event.target == helpModal) {
+                closeModal(helpModal);
+            }
+        }
+
+        // Initialize game
+        loadProgress();
+    </script>
+</body>
+</html>
