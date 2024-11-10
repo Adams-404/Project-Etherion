@@ -6,7 +6,6 @@ Hacker's Quest is an immersive text-based adventure game Developed by Mohammed A
 
 FEATURES
 
-
 Interactive Storyline: Engaging narrative that unfolds as you progress through levels.
 
 Responsive Design: Optimized for different screen sizes with light and dark modes for better accessibility.
@@ -37,7 +36,7 @@ INSTALLATION
 
 1. Clone the repository to your local machine:
 
-git clone <repository-url>
+git clone Adams-404/Hacker-s-Quest-
 
 
 2. Navigate to the project directory:
@@ -140,7 +139,6 @@ git push
 5. Open a Pull Request.
 
 
-
 ACKNOWLEDGEMENT 
 
 
@@ -157,3 +155,19 @@ Initiate game testing release...
 CONTACTS
 
 For more information, question, suggestions, feedback or report... Please hot drop on my email: muhammadadamualiyu33@gmail.com
+
+
+TERMS AND CONDITIONS 
+
+NOTE: 
+You can...
+- Play and enjoy the game.
+- Share the game with others.
+
+However, you are not permitted to:
+
+- Claim ownership or credits for the game's development.
+- Modify or redistribute the game without explicit permission.
+- Use the game for commercial purposes.
+
+By using this game, you agree to these terms.
