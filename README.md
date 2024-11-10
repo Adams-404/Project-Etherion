@@ -171,3 +171,6 @@ However, you are not permitted to:
 - Use the game for commercial purposes.
 
 By using this game, you agree to these terms.
+
+
+Developer: MOHAMMED ADAMU ALIYU (Adams-404)
