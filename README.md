@@ -1,10 +1,10 @@
-HACKER'S QUEST
+**HACKER'S QUEST**
 
 Overview...
 
 Hacker's Quest is an immersive text-based adventure game Developed by Mohammed Adamu "Adams-404" its designed for players... Where players take on the role of a skilled hacker infiltrating a mysterious facility. As the player, you must navigate through various levels, solve puzzles, crack codes, and make choices that influence the storyline and shape the outcome of your quest.
 
-FEATURES
+**FEATURES**
 
 Interactive Storyline: Engaging narrative that unfolds as you progress through levels.
 
@@ -17,7 +17,7 @@ Progress Saving: Automatic progress saves at specific milestones to ensure a sea
 Dynamic Challenges: Includes code-breaking, riddles, and logical puzzles that challenge the player's wit and problem-solving skills.
 
 
-GETTING STARTED 
+**GETTING STARTED **
 
 
 Prerequisites...
@@ -31,7 +31,7 @@ ReactDOM
 Babel
 
 
-INSTALLATION 
+**INSTALLATION** 
 
 
 1. Clone the repository to your local machine:
@@ -48,8 +48,7 @@ cd HackerQuest
 
 
 
-USAGE
-
+**USAGE**
 
 1. Starting the Game:
 
@@ -76,12 +75,11 @@ Save progress will occur automatically at major milestones.
 
 
 
-CUSTOMIZATION 
-
+**CUSTOMIZATION**
 
 You can modify and enhance the game's levels, commands, and outcomes by editing the levels object in the script.
 
-COMMANDS OVERVIEW 
+**COMMANDS OVERVIEW** 
 
 
 goto level X: Navigate to unlocked levels.
@@ -91,7 +89,7 @@ examine room, check pockets, etc.: Various commands trigger unique responses and
 Special Inputs: Certain commands require input sequences, such as access codes, passwords, or sums.
 
 
-CODE OVERVIEW 
+**CODE OVERVIEW** 
 
 
 Files and Structure...
@@ -103,7 +101,7 @@ CSS: Manages the visual styling, including light/dark modes.
 JavaScript: Implements game logic, including handling user inputs, updating levels, and maintaining game state.
 
 
-KEY COMPONENTS 
+**KEY COMPONENTS** 
 
 
 Level System: Each level is defined with commands, descriptions, and outcomes.
@@ -113,7 +111,7 @@ User Interaction: Text inputs and command buttons for game navigation.
 Theme Toggle: Switch between light and dark modes for enhanced accessibility.
 
 
-CONTRIBUTING 
+**CONTRIBUTING** 
 
 
 If you'd like to contribute to the game or report any bug, please:
@@ -139,25 +137,25 @@ git push
 5. Open a Pull Request.
 
 
-ACKNOWLEDGEMENT 
+**ACKNOWLEDGEMENT** 
 
 
 -Inspired by classic text based adventure games
 -Built using HTML, CSS, JavaScript and React
 
 
-CHANGELOG
+**CHANGELOG**
 
 V1.0 Beta
 Initiate game testing release...
 
 
-CONTACTS
+**CONTACTS**
 
 For more information, question, suggestions, feedback or report... Please hot drop on my email: muhammadadamualiyu33@gmail.com
 
 
-TERMS AND CONDITIONS 
+**TERMS AND CONDITIONS** 
 
 NOTE: 
 You can...
