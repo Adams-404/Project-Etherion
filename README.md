@@ -17,7 +17,7 @@ Progress Saving: Automatic progress saves at specific milestones to ensure a sea
 Dynamic Challenges: Includes code-breaking, riddles, and logical puzzles that challenge the player's wit and problem-solving skills.
 
 
-**GETTING STARTED **
+**GETTING STARTED**
 
 
 Prerequisites...
@@ -152,7 +152,7 @@ Initiate game testing release...
 
 **CONTACTS**
 
-For more information, question, suggestions, feedback or report... Please hot drop on my email: muhammadadamualiyu33@gmail.com
+For more information, question, suggestions, feedback or report... Please hot drop on my email: _muhammadadamualiyu33@gmail.com_
 
 
 **TERMS AND CONDITIONS** 
@@ -171,4 +171,4 @@ However, you are not permitted to:
 By using this game, you agree to these terms.
 
 
-Developer: MOHAMMED ADAMU ALIYU (Adams-404)
+Developer: _MOHAMMED ADAMU ALIYU_ (Adams-404)
