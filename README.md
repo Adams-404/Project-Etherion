@@ -171,4 +171,4 @@ However, you are not permitted to:
 By using this game, you agree to these terms.
 
 
-Developer: _MOHAMMED ADAMU ALIYU_ (Adams-404)
+**Developer:** _MOHAMMED ADAMU ALIYU_ (Adams-404)
