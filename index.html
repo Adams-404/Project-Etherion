@@ -408,6 +408,7 @@
     </main>
     
     <div id="like-button-container"></div>
+    <div id="timer-container" style="display: none;">Time left: <span id="timer">60</span>s</div>
 
     <div id="about-modal" class="modal" aria-hidden="true">
         <div class="modal-content" role="dialog" aria-labelledby="about-title">
@@ -431,6 +432,8 @@
             <p>Pay attention to details and hints throughout the game. They may be crucial for solving puzzles and progressing in your mission. Your choices matter and will influence the story's outcome. Good luck, hacker!</p>
         </div>
     </div>
+    
+
     
    
 
@@ -756,8 +759,33 @@ function handleCommand(command) {
 }
 
 function promptForCode() {
+    let timeLeft = 60; // Set the timer duration (60 seconds)
+    const timerContainer = document.getElementById('timer-container');
+    const timerDisplay = document.getElementById('timer');
+
+    // Make the timer visible and start counting down
+    timerContainer.style.display = 'block'; 
+    timerDisplay.textContent = timeLeft; // Initialize display
+
+    // Timer logic
+    const timerInterval = setInterval(() => {
+        if (timeLeft > 0) {
+            timeLeft--;
+            timerDisplay.textContent = timeLeft;
+        } else {
+            clearInterval(timerInterval);
+            timerContainer.style.display = 'none'; // Hide the timer when time runs out
+            gameOver(); // Call a function to handle game over when time runs out
+        }
+    }, 1000);
+
+    // Prompt for the PIN
     const userCode = prompt("Enter the 4-digit access code:");
+
+    // Check if the entered code is correct
     if (userCode === correctCode) {
+        clearInterval(timerInterval); // Stop the timer if correct code is entered
+        timerContainer.style.display = 'none'; // Hide the timer
         appendToGameText("Access granted. The shadows have revealed their secrets.");
         currentLevel = 4;
         maxUnlockedLevel = Math.max(maxUnlockedLevel, currentLevel);
@@ -767,6 +795,13 @@ function promptForCode() {
     }
     updateCommandBoxes();
 }
+
+function gameOver() {
+    appendToGameText("Time is up! The system has locked you out. Game Over.");
+    // Optionally reset or restart the game
+    resetGame(); // Assuming a function like resetGame exists to handle game over logic.
+}
+
 
 function promptForPassword() {
     const userPassword = prompt("Enter the password to bypass the firewall:");
