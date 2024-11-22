@@ -408,7 +408,7 @@
     </nav>
 
     <main class="container">
-        <h1>Hacker's Quest</h1>
+        <h1>Project Etherion</h1>
         <div class="command-boxes">
             <div class="command-box" id="command1" role="button" tabindex="0"></div>
             <div class="command-box" id="command2" role="button" tabindex="0"></div>
@@ -435,14 +435,14 @@
         <div class="modal-content" role="dialog" aria-labelledby="help-title">
             <span class="close" aria-label="Close">&times;</span>
             <h2 id="help-title">Help</h2>
-            <p>To play Hacker's Quest:</p>
+            <p>To play Project Etherion:</p>
             <ol>
                 <li>Read the description of your current situation in the game text area.</li>
                 <li>Choose a command from the options displayed in the command boxes, or type your own command.</li>
                 <li>Enter your chosen command in the input field and click "Execute" or press Enter.</li>
                 <li>Read the outcome of your action and continue making choices to progress through the game.</li>
             </ol>
-            <p>Pay attention to details and hints throughout the game. They may be crucial for solving puzzles and progressing in your mission. Your choices matter and will influence the story's outcome. Good luck, hacker!</p>
+            <p>Pay attention to details and hints throughout the game. They may be crucial for solving puzzles and progressing in your mission. Your choices matter and will influence the story's outcome. Good luck, agent!</p>
         </div>
     </div>
     
@@ -458,9 +458,9 @@
         description: "You wake up in a strange room, feeling dizzy, confused and disoriented. The screens' light makes it hard to see clearly. Suddenly, a woman’s voice echoes in your head, 'Ah, you’re finally awake?' You touch your ears, searching for earbuds or any device but there’s nothing. The voice is speaking directly inside your head.",
         commands: ['Who are you?', 'What\'s my mission?', 'Tell me everything'],
         outcomes: {
-            'Who are you?': "We are the Shadows, a hidden organization working to shape the digital realm. Our existence is known to only a select few, and we orchestrate operations that influence world events. For this mission, your memories were erased for your protection and ours.",
+            'Who are you?': "We are the Shadows, a hidden organization working to shape the world for the greater good. Our existence is highly CLASSIFIED! Known to only a select few, and we orchestrate operations that influence world events. For this mission, your memories were erased for your protection and ours.",
             'What\'s my mission?': "Your mission: infiltrate the system, uncover Project Omega, and decide the fate of digital security.",
-            'Tell me everything': "So, we are the Shadows, a hidden organization working to shape the world for the greater good. Our existence is highly CLASSIFIED! Known to only a select few, and we orchestrate operations that influence world events. For this mission, your memories were erased for your protection and ours. You have been chosen for your exceptional skills, but they will be put to the ultimate test. Recently we've uncovered a mysterious organization known only as 'The Architects' the Architects has been secretly developing a powerful AI system for years, codenamed 'Omega'. Rumors whisper that Project Omega has the potentials to reshape the global economy, control and have access to the world's most deadliest weapons, security systems and grant its creators unparalleled power. Now your MISSION: Infiltrate the system, uncover Project Omega, and decide the fate of digital security. We've managed to get you access into one of the Architect's main facility as a security guard. You can get started by using the systems infront of you. But be warned: nothing is as it seems. Every shadow hides a secret, every line of code a potential trap. Your journey begins now. May your wits be sharp and your mind sharper. You will face increasingly complex challenges, requiring you to decrypt messages, bypass security systems, and make crucial decisions that will shape the outcome of your quest. Remember, in this digital battleground, knowledge is power, and every choice you make could tip the balance between order and chaos. We believe that you are now ready to dive into the depths of the network and confront the architects of our digital realm"
+            'Tell me everything': "So, we are the 'SHADOWS', a hidden organization working to shape the world for the greater good. Our existence is highly CLASSIFIED! Known to only a select few, and we orchestrate operations that influence world events. For this mission, your memories were erased for your protection and ours. You have been chosen for your exceptional skills, but they will be put to the ultimate test. Recently we've uncovered a mysterious organization known only as 'The Architects' the Architects has been secretly developing a powerful AI system for years, codenamed 'Etherion'. Rumors whisper that Project Etherion has the potentials to reshape the global economy, control and have access to the world's most deadliest weapons, security systems and grant its creators unparalleled power. Now your MISSION: Infiltrate the system, uncover what Project Etherion really is, and decide the fate of digital security. For now, we've managed to get you access into one of the Architect's main facility as a security guard. You can get started by using the systems infront of you. But be warned: nothing is as it seems. Every shadow hides a secret, every line of code a potential trap. Your journey begins now. May your wits be sharp and your mind sharper. You will face increasingly complex challenges, requiring you to decrypt messages, bypass security systems, and make crucial decisions that will shape the outcome of your quest. Remember, in this digital battleground, knowledge is power, and every choice you make could tip the balance between order and chaos. We believe that you are now ready to dive into the depths of the network and confront the architects of our digital realm"
         }
     },
     1: {
@@ -480,7 +480,7 @@
         outcomes: {
             'Open Terminal': "the screen goes black for a moment before a blinking cursor appears. A few lines of text scroll quickly:   Access Restricted: Login Required >_   The terminal seems operational but locked with heavy security... It waits for input, but without proper credentials, you might only not be able to access anything",
             'check pocket note': 3,
-            'Inspect security feeds': "The screens show security footage from around the facility.... There's a footage from the lab with scientists working on a large machine in a glassy room. It looks like some sort of a quantum AI system, or even possibly, 'Project Omega'",
+            'Inspect security feeds': "The screens show security footage from around the facility.... There's a footage from the lab with scientists working on a large machine in a glassy room. It looks like some sort of a quantum AI system, or even possibly, 'Project Etherion'",
             'next level': "To proceed, enter your current level number in the command box below."
         }
     },
@@ -979,16 +979,14 @@ function resetGame() {
 function initializeGame() {
     const loadingElement = document.createElement('p');
     gameText.appendChild(loadingElement);
-    loadingElement.textContent = "Initializing Hacker's Quest";
-
-    // Hide command boxes during initialization
+    loadingElement.textContent = "Initializing";
     commandBoxes.forEach(box => {
         box.style.display = 'none';
     });
 
     let dots = 0;
     const loadingInterval = setInterval(() => {
-        loadingElement.textContent = "Initializing Hacker's Quest" + ".".repeat(dots % 4);
+        loadingElement.textContent = "Initializing." + ".".repeat(dots % 4);
         dots++;
     }, 500);
 
