@@ -168,6 +168,7 @@
             border: 1px solid var(--border-color);
             text-align: center;
             cursor: pointer;
+            min-height: 15px;
         }
         
 
@@ -248,6 +249,17 @@
         @media screen and (max-width: 600px) {
             .burger {
                 display: block;
+                
+            }
+            
+            .command-boxes {
+                flex-direction: column; 
+                align-items: center;
+            }
+
+            .command-box {
+                width: 90%; 
+                margin-bottom: 10px;
             }
             
             #user-input {
@@ -277,7 +289,7 @@
         #like-button-container {
             position: absolute;
             bottom: 20px;
-            left: 20px;
+            left: 47px;
             z-index: 1000;
             text-align: center;
           }
@@ -339,6 +351,7 @@
         .like-button svg {
             width: 20px;
             height: 20px;
+            cursor: pointer;
         }
     }
 
@@ -413,8 +426,8 @@
     <div id="about-modal" class="modal" aria-hidden="true">
         <div class="modal-content" role="dialog" aria-labelledby="about-title">
             <span class="close" aria-label="Close">&times;</span>
-            <h2 id="about-title">About Hacker's Quest</h2>
-            <p>Hacker's Quest is a text-based adventure game where you play as a skilled hacker infiltrating a mysterious facility. Your mission is to uncover the secrets of Project Omega and decide the fate of digital security. Use your wit and hacking skills to navigate through various challenges and make crucial decisions that will shape the outcome of your quest.</p>
+            <h2 id="about-title">About Project Etherion</h2>
+            <p>Project Etherion is a text-based adventure game where you play as "Hax0r_09" an agent who works for an organization known as "The Shadows" infiltrating a mysterious facility. Your mission is to uncover the secrets of Project Etherion and decide the fate of digital security. Use your wit and hacking skills to navigate through various challenges and make crucial decisions that will shape the outcome of your quest.</p>
         </div>
     </div>
 
@@ -440,29 +453,39 @@
 
 
     <script>
-        const levels = {
-    1: {
-        description: "You find yourself in a dimly lit room. A flickering screen casts eerie shadows.",
-        commands: ['examine room', 'boot system', 'check pockets', 'next level'],
+       const levels = {
+    0: {
+        description: "You wake up in a strange room, feeling dizzy, confused and disoriented. The screens' light makes it hard to see clearly. Suddenly, a woman’s voice echoes in your head, 'Ah, you’re finally awake?' You touch your ears, searching for earbuds or any device but there’s nothing. The voice is speaking directly inside your head.",
+        commands: ['Who are you?', 'What\'s my mission?', 'Tell me everything'],
         outcomes: {
-            'examine room': "You notice a faint etching on the wall: 'The key lies in the shadows of 1366'",
-            'boot system': 2,
-            'check pockets': "You find a crumpled note with 'BGG' scrawled on it.",
+            'Who are you?': "We are the Shadows, a hidden organization working to shape the digital realm. Our existence is known to only a select few, and we orchestrate operations that influence world events. For this mission, your memories were erased for your protection and ours.",
+            'What\'s my mission?': "Your mission: infiltrate the system, uncover Project Omega, and decide the fate of digital security.",
+            'Tell me everything': "So, we are the Shadows, a hidden organization working to shape the world for the greater good. Our existence is highly CLASSIFIED! Known to only a select few, and we orchestrate operations that influence world events. For this mission, your memories were erased for your protection and ours. You have been chosen for your exceptional skills, but they will be put to the ultimate test. Recently we've uncovered a mysterious organization known only as 'The Architects' the Architects has been secretly developing a powerful AI system for years, codenamed 'Omega'. Rumors whisper that Project Omega has the potentials to reshape the global economy, control and have access to the world's most deadliest weapons, security systems and grant its creators unparalleled power. Now your MISSION: Infiltrate the system, uncover Project Omega, and decide the fate of digital security. We've managed to get you access into one of the Architect's main facility as a security guard. You can get started by using the systems infront of you. But be warned: nothing is as it seems. Every shadow hides a secret, every line of code a potential trap. Your journey begins now. May your wits be sharp and your mind sharper. You will face increasingly complex challenges, requiring you to decrypt messages, bypass security systems, and make crucial decisions that will shape the outcome of your quest. Remember, in this digital battleground, knowledge is power, and every choice you make could tip the balance between order and chaos. We believe that you are now ready to dive into the depths of the network and confront the architects of our digital realm"
+        }
+    },
+    1: {
+        description: ">>> The call ended somehow, like something jammed it, you see monitors in the room right infront of you.",
+        commands: ['examine room', 'Inspect monitors', 'check pockets', 'next level'],
+        outcomes: {
+            'examine room': "You notice the glow of security monitors showing camera feeds from all over the building. The room is dark, with a track board on the wall covered in pictures and notes about suspects. On one side, weapons like a baton and taser hang neatly, next to a first aid kit. And you quickly realize you’re wearing a security uniform.",
+            'Inspect monitors': 2,
+            'check pockets': "You check your pockets and feel a few items. A keycard, a folded piece of paper. You’re wearing a security uniform, the fabric slightly rough but sturdy, with a badge on the chest.",
             'next level': "To proceed, enter your current level number in the command box below."
+            
         }
     },
     2: {
-        description: "The system whirs to life. A command prompt blinks, waiting for input.",
-        commands: ['run diagnostics', 'check network', 'decode BGG', 'next level'],
+        description: "The screens, showing security feeds from various locations, some labeled as 'Lab.' The only way to access more is by logging in the system seems locked, revealing nothing more unless you can find a way to log in.",
+        commands: ['Open Terminal', 'check pocket note', 'Inspect security feeds', 'next level'],
         outcomes: {
-            'run diagnostics': "Diagnostic complete. System whispers: 'Seek the inverse of the shadow'",
-            'check network': 3,
-            'decode BGG': "Error: Decoding requires advanced cryptographic knowledge.",
+            'Open Terminal': "the screen goes black for a moment before a blinking cursor appears. A few lines of text scroll quickly:   Access Restricted: Login Required >_   The terminal seems operational but locked with heavy security... It waits for input, but without proper credentials, you might only not be able to access anything",
+            'check pocket note': 3,
+            'Inspect security feeds': "The screens show security footage from around the facility.... There's a footage from the lab with scientists working on a large machine in a glassy room. It looks like some sort of a quantum AI system, or even possibly, 'Project Omega'",
             'next level': "To proceed, enter your current level number in the command box below."
         }
     },
     3: {
-        description: "You're connected to a vast network. Multiple nodes are visible, each requiring a specific access code.",
+        description: "Username: GuardX42 |  Password: BGG  | Note: 'You'd have to think to get the correct code. | Hint: Try spacing the B to get two numbers... And what number looks like G? Perhaps, you'd get a four digit numbers after the decryption.",
         commands: ['scan nodes', 'trace route', 'input access code', 'next level'],
         outcomes: {
             'scan nodes': "Three nodes detected: Alpha, Beta, Gamma. Each requires a 4-digit code.",
@@ -547,7 +570,7 @@
         outcomes: {
             "follow knight's path": 12,
             'count nodes': "You count 64 nodes, arranged in an 8x8 grid. This seems familiar.",
-            'reset board': "The board refuses to reset. A message flashes: 'Progress is irreversible'",
+            'reset board': 'wrongAnswer',
             'next level': "To proceed, enter your current level number in the command box below."
         }
     },
@@ -563,10 +586,10 @@
     },
     13: {
         description: "Symbols from the ancient device swirl and combine with the modern console's display.",
-        commands: ['input sum', 'decode symbols', 'combine ancient and modern', 'next level'],
+        commands: ['input sum', 'show hint', 'combine ancient and modern', 'next level'],
         outcomes: {
             'input sum': 'sumInput',
-            'decode symbols': "The symbols seem to represent the Fibonacci sequence. But what's the sum?",
+            'show hint': "The symbols seem to represent the Fibonacci sequence. But what's the sum of the first 10?",
             'combine ancient and modern': "As you attempt to interface the ancient device with the modern console, you notice they fit perfectly together.",
             'next level': "To proceed, enter your current level number in the command box below."
         }
@@ -596,8 +619,8 @@
         commands: ['A map', 'A globe', 'A painting', 'next level'],
         outcomes: {
             'A map': 17,
-            'A globe': "Incorrect. The AI seems disappointed.",
-            'A painting': "Incorrect. The AI's eyes glow ominously.",
+            'A globe': 'wrongAnswer',
+            'A painting': 'wrongAnswer',
             'next level': "To proceed, enter your current level number in the command box below."
         }
     },
@@ -606,8 +629,8 @@
         commands: ['The letter M', 'Time', 'Chance', 'next level'],
         outcomes: {
             'The letter M': 18,
-            'Time': "Wrong. The AI's form flickers menacingly.",
-            'Chance': "Incorrect. You feel the system's defenses activating.",
+            'Time': 'wrongAnswer',
+            'Chance': 'wrongAnswer',
             'next level': "To proceed, enter your current level number in the command box below."
         }
     },
@@ -616,8 +639,8 @@
         commands: ['Fire', 'Plant', 'Rust', 'next level'],
         outcomes: {
             'Fire': 19,
-            'Plant': "Incorrect. The AI's disappointment is palpable.",
-            'Rust': "Wrong. The AI sighs, 'So close, yet so far.'",
+            'Plant': 'wrongAnswer',
+            'Rust': 'wrongAnswer',
             'next level': "To proceed, enter your current level number in the command box below."
         }
     },
@@ -643,13 +666,13 @@
     }
 };
 
-let currentLevel = 1;
-let lastSavedLevel = 1;
-let maxUnlockedLevel = 1;
+let currentLevel = 0; 
+let lastSavedLevel = 0; 
+let maxUnlockedLevel = 0;
 const correctCode = "1366";
 const correctPassword = "fire";
 const correctSequence = "89";
-const correctSum = "231"; // Sum of first 13 Fibonacci numbers
+const correctSum = "88"; 
 
 const gameText = document.getElementById('game-text');
 const userInput = document.getElementById('user-input');
@@ -660,7 +683,6 @@ const commandBoxes = [
     document.getElementById('command2'),
     document.getElementById('command3'),
     document.getElementById('command4')
-   
 ];
 const burger = document.querySelector('.burger');
 const nav = document.querySelector('nav ul');
@@ -671,48 +693,118 @@ const helpModal = document.getElementById('help-modal');
 const closeBtns = document.getElementsByClassName('close');
 
 function updateCommandBoxes() {
-    const commands = levels[currentLevel].commands;
+    const commands = levels[currentLevel]?.commands || [];
     commandBoxes.forEach((box, index) => {
-        // If the command is "next level" and if the current level is not dead end...
         if (commands[index] === 'next level' && ![7, 10, 12].includes(currentLevel)) {
-            box.style.display = 'none'; 
+            box.style.display = 'none';
+        } else if (!commands[index]) {
+            box.style.display = 'none';
+            box.textContent = '';
+            box.setAttribute('aria-label', '');
         } else {
-            box.style.display = ''; 
-            box.textContent = commands[index] || '';
-            box.setAttribute('aria-label', `Command option: ${commands[index] || 'Not available'}`);
+            box.style.display = '';
+            if (!isTyping) {
+                box.textContent = commands[index];
+                box.setAttribute('aria-label', `Command option: ${commands[index]}`);
+            } else {
+                box.textContent = '';
+                box.setAttribute('aria-label', '');
+            }
         }
     });
 }
 
 
+let messageQueue = [];
+let isTyping = false;
+
 function appendToGameText(text, isUserInput = false) {
-    const newParagraph = document.createElement('p');
-    gameText.appendChild(newParagraph);
-    if (isUserInput) {
-        newParagraph.textContent = `> ${text}`;
-    } else {
-        typeWriter(newParagraph, text, 0);
-    }
-    gameText.scrollTop = gameText.scrollHeight;
+    messageQueue.push({ text, isUserInput });
+    processQueue();
 }
 
-function typeWriter(element, text, index) {
+function processQueue() {
+    if (isTyping || messageQueue.length === 0) return;
+
+    isTyping = true;
+    const { text, isUserInput } = messageQueue.shift();
+    const newParagraph = document.createElement('p');
+    gameText.appendChild(newParagraph);
+
+    if (isUserInput) {
+        newParagraph.textContent = `> ${text}`;
+        isTyping = false;
+        processQueue();
+    } else {
+        commandBoxes.forEach(box => box.textContent = '');
+        typeWriter(newParagraph, text, 0, () => {
+            isTyping = false;
+            updateCommandBoxes();
+            processQueue();
+        });
+    }
+}
+
+function typeWriter(element, text, index, callback) {
     if (index < text.length) {
         element.textContent += text.charAt(index);
-        setTimeout(() => typeWriter(element, text, index + 1), 25);
+        gameText.scrollTop = gameText.scrollHeight;
+        setTimeout(() => typeWriter(element, text, index + 1, callback), 25);
+    } else if (callback) {
+        callback();
+    }
+}
+
+
+
+function handleWrongOption() {
+    appendToGameText("Incorrect choice. The system detects your error.");
+    
+    if (currentLevel > lastSavedLevel) {
+        appendToGameText("Security protocols engaged. Reverting to last secure checkpoint.");
+        setTimeout(() => {
+            currentLevel = lastSavedLevel;
+            appendToGameText(`Restored to Level ${currentLevel}. Stay vigilant, hacker.`);
+            appendToGameText(levels[currentLevel].description);
+            updateCommandBoxes();
+        }, 2000);
+    } else {
+        appendToGameText("No previous checkpoint detected. Proceed with caution.");
     }
 }
 
 function handleCommand(command) {
+    const normalizedCommand = command.toLowerCase().trim();
     appendToGameText(command, true);
-    
-    // Check if the command is "show current level"
-    if (command === 'show current level') {
-        appendToGameText(`You are currently at level ${currentLevel}.`);
-        return; 
+
+    if (currentLevel === 0) {
+        const outcome = levels[0].outcomes[command];
+        if (outcome) {
+            appendToGameText(outcome);
+            if (command === 'What\'s my mission?') {
+                currentLevel = 1;
+                appendToGameText(levels[currentLevel].description);
+            } else if (command === 'Who are you?') {
+                currentLevel = 1;
+                appendToGameText(levels[currentLevel].description);
+            } else if (command === 'Tell me everything') {
+                
+                currentLevel = 1;
+                appendToGameText(levels[currentLevel].description);
+            }
+        } else {
+            appendToGameText("Invalid input. Please choose one of the available options.");
+        }
+        updateCommandBoxes();
+        return;
     }
 
-    if (command.startsWith('goto level ')) {
+    if (normalizedCommand === 'show current level') {
+        appendToGameText(`You are currently at level ${currentLevel}.`);
+        return;
+    }
+
+    if (normalizedCommand.startsWith('goto level ')) {
         const targetLevel = parseInt(command.split(' ')[2]);
         if (isNaN(targetLevel) || targetLevel < 1 || targetLevel > maxUnlockedLevel) {
             appendToGameText("Invalid level or level not unlocked yet.");
@@ -725,32 +817,53 @@ function handleCommand(command) {
         return;
     }
 
-    const outcome = levels[currentLevel].outcomes[command];
-    if (outcome === 'codeInput') {
-        promptForCode();
-    } else if (outcome === 'passwordInput') {
-        promptForPassword();
-    } else if (outcome === 'sequenceInput') {
-        promptForSequence();
-    } else if (outcome === 'sumInput') {
-        promptForSum();
-    } else if (typeof outcome === 'number') {
-        currentLevel = outcome;
-        maxUnlockedLevel = Math.max(maxUnlockedLevel, currentLevel);
-        appendToGameText(levels[currentLevel].description);
-    } else if (command === currentLevel.toString()) {
+    if (!isNaN(parseInt(normalizedCommand)) && parseInt(normalizedCommand) !== currentLevel) {
+        appendToGameText("Incorrect level or access to the next level denied. Please try again.");
+        return;
+    }
+
+    if (normalizedCommand === currentLevel.toString()) {
         currentLevel++;
         maxUnlockedLevel = Math.max(maxUnlockedLevel, currentLevel);
         appendToGameText(`Advancing to level ${currentLevel}...`);
         appendToGameText(levels[currentLevel].description);
-    } else if (outcome) {
-        appendToGameText(outcome);
+        updateCommandBoxes();
+        return;
+    }
+
+    const outcomes = levels[currentLevel].outcomes;
+    const matchingCommand = Object.keys(outcomes).find(opt => opt.toLowerCase() === normalizedCommand);
+
+    if (matchingCommand) {
+        const outcome = outcomes[matchingCommand];
+        if (typeof outcome === 'number') {
+            currentLevel = outcome;
+            maxUnlockedLevel = Math.max(maxUnlockedLevel, currentLevel);
+            appendToGameText(levels[currentLevel].description);
+        } else if (outcome === 'codeInput') {
+            promptForCode();
+            return;
+        } else if (outcome === 'passwordInput') {
+            promptForPassword();
+            return;
+        } else if (outcome === 'sequenceInput') {
+            promptForSequence();
+            return;
+        } else if (outcome === 'sumInput') {
+            promptForSum();
+            return;
+        } else if (outcome === 'wrongAnswer') {
+            appendToGameText("Wrong option. You will now revert to your last saved progress.");
+            revertToLastSavedLevel();
+        } else {
+            appendToGameText(outcome);
+        }
     } else {
-        appendToGameText("Invalid command. The system doesn't recognize this input.");
+        appendToGameText("Invalid input or choice. Please try again.");
     }
 
     updateCommandBoxes();
-    
+
     if (currentLevel % 5 === 0 && currentLevel !== lastSavedLevel) {
         saveProgress();
         lastSavedLevel = currentLevel;
@@ -758,73 +871,50 @@ function handleCommand(command) {
     }
 }
 
+function revertToLastSavedLevel() {
+    currentLevel = parseInt(localStorage.getItem('hackerQuestLastSavedLevel')) || 1;
+    appendToGameText(`Reverting to last saved level: Level ${currentLevel}.`);
+    appendToGameText(levels[currentLevel].description);
+    updateCommandBoxes();
+}
+
 function promptForCode() {
-    let timeLeft = 60; // Set the timer duration (60 seconds)
-    const timerContainer = document.getElementById('timer-container');
-    const timerDisplay = document.getElementById('timer');
-
-    // Make the timer visible and start counting down
-    timerContainer.style.display = 'block'; 
-    timerDisplay.textContent = timeLeft; // Initialize display
-
-    // Timer logic
-    const timerInterval = setInterval(() => {
-        if (timeLeft > 0) {
-            timeLeft--;
-            timerDisplay.textContent = timeLeft;
-        } else {
-            clearInterval(timerInterval);
-            timerContainer.style.display = 'none'; // Hide the timer when time runs out
-            gameOver(); // Call a function to handle game over when time runs out
-        }
-    }, 1000);
-
-    // Prompt for the PIN
     const userCode = prompt("Enter the 4-digit access code:");
 
-    // Check if the entered code is correct
     if (userCode === correctCode) {
-        clearInterval(timerInterval); // Stop the timer if correct code is entered
-        timerContainer.style.display = 'none'; // Hide the timer
         appendToGameText("Access granted. The shadows have revealed their secrets.");
-        currentLevel = 4;
+        currentLevel = 4; 
         maxUnlockedLevel = Math.max(maxUnlockedLevel, currentLevel);
         appendToGameText(levels[currentLevel].description);
     } else {
-        appendToGameText("Access denied. The shadows grow deeper. Try again, but remember, not all is as it seems.");
+        appendToGameText("Access Denied. Please try again."); 
     }
     updateCommandBoxes();
 }
 
-function gameOver() {
-    appendToGameText("Time is up! The system has locked you out. Game Over.");
-    // Optionally reset or restart the game
-    resetGame(); // Assuming a function like resetGame exists to handle game over logic.
-}
-
-
 function promptForPassword() {
     const userPassword = prompt("Enter the password to bypass the firewall:");
-    if (userPassword.toLowerCase() === correctPassword) {
+    if (userPassword && userPassword.toLowerCase() === correctPassword) {
         appendToGameText("Firewall breached. You've proven your worth as a true hacker.");
         currentLevel = 6;
         maxUnlockedLevel = Math.max(maxUnlockedLevel, currentLevel);
         appendToGameText(levels[currentLevel].description);
     } else {
-        appendToGameText("Incorrect password. The firewall stands strong. Think carefully about the clues you've gathered.");
+        appendToGameText("Access Denied. Please try again."); 
     }
     updateCommandBoxes();
 }
 
 function promptForSequence() {
     const userSequence = prompt("Enter the next number in the sequence:");
+
     if (userSequence === correctSequence) {
         appendToGameText("Correct! The door unlocks, revealing the path ahead.");
-        currentLevel = 9;
+        currentLevel = 9; 
         maxUnlockedLevel = Math.max(maxUnlockedLevel, currentLevel);
         appendToGameText(levels[currentLevel].description);
     } else {
-        appendToGameText("Incorrect sequence. The door remains locked. Perhaps you need to look at the bigger picture.");
+        appendToGameText("Access Denied. Please try again."); 
     }
     updateCommandBoxes();
 }
@@ -833,11 +923,11 @@ function promptForSum() {
     const userSum = prompt("Enter the sum of wisdom:");
     if (userSum === correctSum) {
         appendToGameText("Your wisdom is acknowledged. The path to deeper knowledge opens before you.");
-        currentLevel = 14;
+        currentLevel = 14; 
         maxUnlockedLevel = Math.max(maxUnlockedLevel, currentLevel);
         appendToGameText(levels[currentLevel].description);
     } else {
-        appendToGameText("Incorrect sum. The ancient device and modern console remain inactive. Consider the sequence and its implications.");
+        appendToGameText("Access Denied. Please try again."); 
     }
     updateCommandBoxes();
 }
@@ -876,9 +966,9 @@ function loadProgress() {
 }
 
 function resetGame() {
-    currentLevel = 1;
-    lastSavedLevel = 1;
-    maxUnlockedLevel = 1;
+    currentLevel = 0;
+    lastSavedLevel = 0;
+    maxUnlockedLevel = 0;
     localStorage.removeItem('hackerQuestLevel');
     localStorage.removeItem('hackerQuestLastSavedLevel');
     localStorage.removeItem('hackerQuestMaxUnlockedLevel');
@@ -890,7 +980,12 @@ function initializeGame() {
     const loadingElement = document.createElement('p');
     gameText.appendChild(loadingElement);
     loadingElement.textContent = "Initializing Hacker's Quest";
-    
+
+    // Hide command boxes during initialization
+    commandBoxes.forEach(box => {
+        box.style.display = 'none';
+    });
+
     let dots = 0;
     const loadingInterval = setInterval(() => {
         loadingElement.textContent = "Initializing Hacker's Quest" + ".".repeat(dots % 4);
@@ -899,34 +994,16 @@ function initializeGame() {
 
     setTimeout(() => {
         clearInterval(loadingInterval);
-        loadingElement.textContent = "Initialization complete. Welcome to the shadows.";
-        
-        const messages = [
-            "Welcome to Hacker's Quest. This is not a game for the faint of heart.",
-            "You've been chosen for your exceptional skills, but they will be put to the ultimate test.",
-            "Your mission: infiltrate the system, uncover Project Omega, and decide the fate of digital security.",
-            "Be warned: nothing is as it seems. Every shadow hides a secret, every line of code a potential trap.",
-            "Your journey begins now. May your wits be sharp and your mind sharper.",
-            "To move between unlocked levels, use the command 'goto level X' where X is the level number.",
-            levels[currentLevel].description
-        ];
+        loadingElement.textContent = "Initialization complete.";
 
-        messages.reduce((delay, message) => {
-            return delay.then(() => new Promise(resolve => {
-                setTimeout(() => {
-                    appendToGameText(message);
-                    if (message === messages[messages.length - 1]) {
-                        updateCommandBoxes();
-                    }
-                    resolve();
-                }, 3000);
-            }));
-        }, Promise.resolve());
+        appendToGameText(levels[0].description);
+        updateCommandBoxes();
     }, 5000);
 }
 
+
 submitBtn.addEventListener('click', () => {
-    const command = userInput.value.trim().toLowerCase();
+    const command = userInput.value.trim();
     if (command !== '') {
         handleCommand(command);
         userInput.value = '';
@@ -986,12 +1063,12 @@ window.onclick = (event) => {
 document.getElementById('clear-progress-btn').addEventListener('click', () => {
     if (confirm("Are you sure you want to clear your progress? This action cannot be undone.")) {
         resetGame();
-        appendToGameText("Game progress cleared. The challenge begins anew, hacker.");
-    }
+        appendToGameText("Game progress cleared. The challenge begins");    }
 });
 
-// Initialize game
 loadProgress();
+
+console.log("Game logic updated with wrong answer handling for all levels.");
     </script>
     <script type="text/babel">
   function formatNumber(num) {
@@ -1022,10 +1099,10 @@ loadProgress();
         setLiked(savedLiked === 'true')
       }
 
-      // Calculate missed updates
+      
       if (lastUpdateTime) {
         const timeDiff = Date.now() - parseInt(lastUpdateTime)
-        const missedUpdates = Math.floor(timeDiff / 30000) // 30 seconds interval
+        const missedUpdates = Math.floor(timeDiff / 30000) 
         if (missedUpdates > 0) {
           setCount(prevCount => {
             const newCount = prevCount + missedUpdates * (Math.floor(Math.random() * 10) + 1)
@@ -1035,7 +1112,7 @@ loadProgress();
         }
       }
 
-      // Set up interval for future updates
+     
       const intervalId = setInterval(() => {
         setCount(prevCount => {
           const randomIncrement = Math.floor(Math.random() * 10) + 1
@@ -1080,8 +1157,8 @@ loadProgress();
   width="24"
   height="24"
   viewBox="0 0 24 24"
-  fill={liked ? "green" : "none"} // Green fill when liked, none when not liked
-  stroke={liked ? "none" : "green"} // Green stroke only when not liked
+  fill={liked ? "green" : "none"}
+  stroke={liked ? "none" : "green"} 
   strokeWidth="2"
   strokeLinecap="round"
   strokeLinejoin="round"
