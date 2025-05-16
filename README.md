@@ -2,7 +2,7 @@
 
 Overview...
 
-Project Etherion is an immersive text-based adventure game developed by Mohammed Adamu "Adams-404." Players take on the role of a skilled hacker working for "The Shadows," a covert organization on a mission to uncover the mysteries surrounding a powerful AI known as Project Etherion. Navigate various levels, solve puzzles, crack codes, and make crucial decisions that shape the storyline and determine the fate of digital security.
+Project Etherion is an immersive text-based adventure game. Players take on the role of a skilled hacker working for "The Shadows," a covert organization on a mission to uncover the mysteries surrounding a powerful AI known as Project Etherion. Navigate various levels, solve puzzles, crack codes, and make crucial decisions that shape the storyline and determine the fate of digital security.
 
 **FEATURES**
 
