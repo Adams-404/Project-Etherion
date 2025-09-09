@@ -1,0 +1,80 @@
+:root {
+  --bg-color: #000000;
+  --text-color: #00ff00; /* match original */
+  --input-bg: #0a0a0a;
+  --border-color: #00ff00;
+  --nav-bg: #0a0a0a;
+}
+
+.light-mode {
+  --bg-color: #f0f0f0;
+  --text-color: #0a0a0a;
+  --input-bg: #ffffff;
+  --border-color: #1a1a1a;
+  --nav-bg: #ffffff;
+}
+
+* { box-sizing: border-box; }
+
+html, body, #root { height: 100%; }
+body {
+  margin: 0;
+  font-family: 'Courier New', monospace;
+  background: radial-gradient(1000px 600px at 20% -10%, rgba(0,255,0,0.08), transparent 50%),
+              radial-gradient(800px 500px at 120% 10%, rgba(0,255,0,0.06), transparent 50%),
+              var(--bg-color);
+  color: var(--text-color);
+  font-size: 18px; /* scale up base text */
+}
+
+.container { max-width: 1100px; margin: 0 auto; padding: 24px; }
+
+.nav {
+  display: flex; align-items: center; justify-content: space-between;
+  background-color: var(--nav-bg); padding: 14px 18px; border: 2px solid var(--border-color);
+  position: sticky; top: 0; z-index: 10;
+  box-shadow: 0 0 12px rgba(0,255,0,0.25);
+}
+.nav .brand { font-weight: bold; letter-spacing: 1px; }
+.nav .nav-links { display: flex; gap: 12px; list-style: none; margin: 0; padding: 0; }
+.nav .nav-links li button { background: transparent; border: 2px solid var(--border-color); color: var(--text-color); padding: 8px 12px; cursor: pointer; }
+.mode-toggle { background: transparent; border: 2px solid var(--border-color); color: var(--text-color); padding: 8px 12px; cursor: pointer; }
+
+.main h1 { text-align: center; margin: 22px 0 14px; font-family: 'Press Start 2P', cursive; font-size: 34px; text-shadow: 0 0 6px rgba(0,255,0,0.5); }
+
+.command-boxes { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-bottom: 18px; }
+.command-box { background: var(--input-bg); border: 2px solid var(--border-color); color: var(--text-color); padding: 14px; cursor: pointer; min-height: 56px; box-shadow: 0 0 8px rgba(0,255,0,0.25) inset; }
+.command-box:hover { box-shadow: 0 0 12px rgba(0,255,0,0.35) inset; }
+
+@media (max-width: 700px) {
+  .command-boxes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.game-text { height: 420px; overflow-y: auto; border: 2px solid var(--border-color); padding: 14px; background-color: var(--input-bg); box-shadow: 0 0 12px rgba(0,255,0,0.25) inset; }
+.game-text p { margin: 6px 0; line-height: 1.5; }
+
+/* Scrollbar styling similar to original */
+.game-text::-webkit-scrollbar { width: 10px; }
+.game-text::-webkit-scrollbar-thumb { background-color: var(--text-color); border-radius: 4px; }
+.game-text::-webkit-scrollbar-track { background-color: var(--input-bg); }
+
+.input-row { display: flex; gap: 10px; margin-top: 12px; }
+.input-row input { flex: 1; padding: 12px; background: var(--input-bg); border: 2px solid var(--border-color); color: var(--text-color); }
+.input-row button { padding: 12px 18px; background: var(--text-color); color: var(--bg-color); border: none; cursor: pointer; font-weight: bold; }
+
+.modal { position: fixed; inset: 0; display: grid; place-items: center; z-index: 1000; }
+.modal-backdrop { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); }
+.modal-content { position: relative; width: min(92vw, 720px); background: var(--bg-color); border: 2px solid var(--border-color); padding: 24px; z-index: 1; box-shadow: 0 0 16px rgba(0,255,0,0.25); }
+.modal .close { position: absolute; right: 10px; top: 8px; background: transparent; border: 2px solid var(--border-color); color: var(--text-color); padding: 4px 10px; cursor: pointer; }
+
+/* Responsive tweaks */
+@media (max-width: 900px) {
+  .container { padding: 16px; }
+  .main h1 { font-size: 28px; }
+  .game-text { height: 50vh; }
+}
+
+@media (max-width: 600px) {
+  body { font-size: 16px; }
+  .command-box { min-height: 48px; padding: 10px; }
+}

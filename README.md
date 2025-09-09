@@ -37,6 +37,35 @@ To run this project, ensure you have the following installed on your machine:
 
 3. Open `index.html` in your preferred web browser.
 
+**REACT (VITE) SCAFFOLD**
+
+If you want a modern React-based version with animations and sound, a separate app has been scaffolded in `etherion-react/`. The original static site remains unchanged.
+
+Quick start for the React app:
+
+1. Install dependencies
+   ```bash
+   cd etherion-react
+   npm install
+   ```
+
+2. Run the development server
+   ```bash
+   npm run dev
+   ```
+
+3. Open the local URL shown in the terminal (e.g., http://localhost:5173) in your browser.
+
+Tech stack used in the React app:
+- React + Vite
+- Framer Motion (animations)
+- Howler (audio)
+- Zustand (lightweight state management)
+
+Next steps for migration:
+- Port the level system, command handling, and typewriter effect from `index.html` into React components.
+- Add advanced UI, sounds, and transitions.
+
 **USAGE**
 
 1. **Starting the Game:**

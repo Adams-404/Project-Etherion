@@ -1,0 +1,55 @@
+# Node
+node_modules/
+**/node_modules/
+
+# Vite / React build output
+/dist/
+**/dist/
+.vite/
+**/.vite/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor directories and files
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+*.swm
+.DS_Store
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Tests and coverage
+coverage/
+**/coverage/
+
+# Caches
+.eslintcache
+.stylelintcache
+parcel-cache/
+**/.parcel-cache/
+.cache/
+**/.cache/
+
+# Optional lock files (keep the one you use)
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+
+# Build artifacts
+*.log
+*.tmp
+*.temp
+
+# OS files
+Thumbs.db
+Desktop.ini
