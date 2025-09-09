@@ -13,7 +13,7 @@ export default function GameText({ messages }) {
   return (
     <div ref={containerRef} className="game-text" aria-live="polite">
       {messages.map((m) => (
-        <motion.p key={m.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+        <motion.p key={m.id} className={m.user ? 'msg user' : 'msg system'} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
           {m.text}
         </motion.p>
       ))}

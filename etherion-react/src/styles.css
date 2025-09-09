@@ -79,6 +79,9 @@ body {
 
 .game-text { height: 420px; overflow-y: auto; border: 2px solid var(--border-color); padding: 14px; background-color: var(--input-bg); box-shadow: 0 0 12px rgba(0,255,0,0.25) inset; position: relative; }
 .game-text p { margin: 6px 0; line-height: 1.5; }
+.game-text .msg { display: block; white-space: pre-wrap; }
+.game-text .msg.user { color: #9cff9c; }
+.game-text .msg.user::before { content: '> '; color: var(--text-color); }
 
 /* CRT scanlines overlay */
 .crt { position: relative; }

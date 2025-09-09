@@ -19,18 +19,19 @@ export default function App() {
   const currentLevel = useGameStore((s) => s.currentLevel)
   const handleCommand = useGameStore((s) => s.handleCommand)
   const append = useGameStore((s) => s.append)
+  const init = useGameStore((s) => s.init)
   const inputPrompt = useGameStore((s) => s.inputPrompt)
   const closePrompt = useGameStore((s) => s.closePrompt)
   const submitPrompt = useGameStore((s) => s.submitPrompt)
 
   const commands = React.useMemo(() => {
-    return levels[currentLevel]?.commands || []
-  }, [currentLevel])
+    return isTyping ? [] : (levels[currentLevel]?.commands || [])
+  }, [isTyping, currentLevel])
 
-  // On mount, show the initial level description (0)
+  // On mount, initialize once (handles StrictMode double-invoke)
   React.useEffect(() => {
-    append(levels[0].description)
-  }, [])
+    init()
+  }, [init])
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -48,7 +49,7 @@ export default function App() {
           Project Etherion
         </motion.h1>
 
-        <CommandBoxes commands={commands} onPick={handleCommand} />
+        <CommandBoxes commands={commands} onPick={handleCommand} disabled={isTyping} />
 
         <GameText messages={messages} />
 
@@ -58,8 +59,9 @@ export default function App() {
             placeholder="Enter your command..."
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
+            disabled={isTyping}
           />
-          <button type="submit">Execute</button>
+          <button type="submit" disabled={isTyping}>Execute</button>
         </form>
       </main>
 

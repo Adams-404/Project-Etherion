@@ -10,14 +10,25 @@ export const useGameStore = create((set, get) => ({
   currentLevel: 0,
   lastSavedLevel: 0,
   maxUnlockedLevel: 0,
-  messages: [
-    { id: 1, text: 'Welcome to Project Etherion (React).', user: false },
-  ],
+  initialized: false,
+  messages: [],
   queue: [],
   isTyping: false,
   inputPrompt: null, // { kind: 'code'|'password'|'sequence'|'sum' }
+  idCounter: 1,
 
   // actions
+  init() {
+    const st = get()
+    if (st.initialized) return
+    set({ initialized: true })
+    get().append(levels[0].description)
+  },
+  genId() {
+    const n = get().idCounter
+    set({ idCounter: n + 1 })
+    return n
+  },
   append(text, isUser = false) {
     const st = get()
     st.queue.push({ text, isUser })
@@ -30,13 +41,14 @@ export const useGameStore = create((set, get) => ({
 
     const { text, isUser } = st.queue.shift()
     if (isUser) {
-      set((s) => ({ messages: [...s.messages, { id: Date.now(), text: `> ${text}`, user: true }] }))
+      const id = get().genId()
+      set((s) => ({ messages: [...s.messages, { id, text, user: true }] }))
       return get().processQueue()
     }
 
     // typewriter effect
     set({ isTyping: true })
-    const id = Date.now()
+    const id = get().genId()
     set((s) => ({ messages: [...s.messages, { id, text: '', user: false }] }))
     for (let i = 0; i < text.length; i++) {
       set((s) => ({
