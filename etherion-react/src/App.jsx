@@ -9,7 +9,6 @@ import { useGameStore } from './store/game'
 import { levels } from './game/gameData'
 
 export default function App() {
-  const [mode, setMode] = React.useState('dark')
   const [aboutOpen, setAboutOpen] = React.useState(false)
   const [helpOpen, setHelpOpen] = React.useState(false)
   const [inputValue, setInputValue] = React.useState('')
@@ -28,10 +27,6 @@ export default function App() {
     return levels[currentLevel]?.commands || []
   }, [currentLevel])
 
-  React.useEffect(() => {
-    document.documentElement.classList.toggle('light-mode', mode === 'light')
-  }, [mode])
-
   // On mount, show the initial level description (0)
   React.useEffect(() => {
     append(levels[0].description)
@@ -45,9 +40,8 @@ export default function App() {
   }
 
   return (
-    <div className="container">
-      <NavBar mode={mode} onToggleMode={() => setMode((m) => (m === 'dark' ? 'light' : 'dark'))}
-              onAbout={() => setAboutOpen(true)} onHelp={() => setHelpOpen(true)} />
+    <div className="container crt">
+      <NavBar onAbout={() => setAboutOpen(true)} onHelp={() => setHelpOpen(true)} />
 
       <main className="main">
         <motion.h1 initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>

@@ -20,9 +20,25 @@ html, body, #root { height: 100%; }
 body {
   margin: 0;
   font-family: 'Courier New', monospace;
-  background: radial-gradient(1000px 600px at 20% -10%, rgba(0,255,0,0.08), transparent 50%),
-              radial-gradient(800px 500px at 120% 10%, rgba(0,255,0,0.06), transparent 50%),
-              var(--bg-color);
+  background:
+    radial-gradient(1000px 600px at 20% -10%, rgba(0,255,0,0.08), transparent 50%),
+    radial-gradient(800px 500px at 120% 10%, rgba(0,255,0,0.06), transparent 50%),
+    /* cyber grid */
+    repeating-linear-gradient(
+      0deg,
+      rgba(0,255,0,0.06) 0px,
+      rgba(0,255,0,0.06) 1px,
+      transparent 1px,
+      transparent 24px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(0,255,0,0.06) 0px,
+      rgba(0,255,0,0.06) 1px,
+      transparent 1px,
+      transparent 24px
+    ),
+    var(--bg-color);
   color: var(--text-color);
   font-size: 18px; /* scale up base text */
 }
@@ -36,11 +52,22 @@ body {
   box-shadow: 0 0 12px rgba(0,255,0,0.25);
 }
 .nav .brand { font-weight: bold; letter-spacing: 1px; }
+.nav .brand::before { content: ''; display: inline-block; width: 8px; height: 8px; margin-right: 8px; border-radius: 50%; background: #00ff00; box-shadow: 0 0 8px #00ff00; animation: pulse 1.6s infinite; }
 .nav .nav-links { display: flex; gap: 12px; list-style: none; margin: 0; padding: 0; }
 .nav .nav-links li button { background: transparent; border: 2px solid var(--border-color); color: var(--text-color); padding: 8px 12px; cursor: pointer; }
 .mode-toggle { background: transparent; border: 2px solid var(--border-color); color: var(--text-color); padding: 8px 12px; cursor: pointer; }
 
 .main h1 { text-align: center; margin: 22px 0 14px; font-family: 'Press Start 2P', cursive; font-size: 34px; text-shadow: 0 0 6px rgba(0,255,0,0.5); }
+.main h1.glitch { position: relative; }
+.main h1.glitch::before,
+.main h1.glitch::after {
+  content: attr(data-text);
+  position: absolute; left: 0; right: 0; text-align: inherit;
+  top: 0; color: var(--text-color); opacity: 0.8;
+}
+.main h1.glitch::before { transform: translate(2px, 0); color: rgba(0,255,0,0.6); filter: blur(0.5px); mix-blend-mode: screen; }
+.main h1.glitch::after { transform: translate(-2px, 0); color: rgba(0,200,0,0.6); filter: blur(0.5px); mix-blend-mode: screen; }
+.main h1.glitch { animation: glitchShift 2.5s infinite steps(12); }
 
 .command-boxes { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-bottom: 18px; }
 .command-box { background: var(--input-bg); border: 2px solid var(--border-color); color: var(--text-color); padding: 14px; cursor: pointer; min-height: 56px; box-shadow: 0 0 8px rgba(0,255,0,0.25) inset; }
@@ -50,8 +77,33 @@ body {
   .command-boxes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
-.game-text { height: 420px; overflow-y: auto; border: 2px solid var(--border-color); padding: 14px; background-color: var(--input-bg); box-shadow: 0 0 12px rgba(0,255,0,0.25) inset; }
+.game-text { height: 420px; overflow-y: auto; border: 2px solid var(--border-color); padding: 14px; background-color: var(--input-bg); box-shadow: 0 0 12px rgba(0,255,0,0.25) inset; position: relative; }
 .game-text p { margin: 6px 0; line-height: 1.5; }
+
+/* CRT scanlines overlay */
+.crt { position: relative; }
+.crt::before {
+  pointer-events: none;
+  content: '';
+  position: fixed; inset: 0; z-index: 9999;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.12) 0px,
+    rgba(0, 0, 0, 0.12) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  opacity: 0.25;
+}
+
+/* Subtle noise flicker */
+.crt::after {
+  pointer-events: none;
+  content: '';
+  position: fixed; inset: 0; z-index: 9998;
+  background: radial-gradient(circle at 50% 0%, rgba(0,255,0,0.05), transparent 40%);
+  animation: flicker 6s infinite;
+}
 
 /* Scrollbar styling similar to original */
 .game-text::-webkit-scrollbar { width: 10px; }
@@ -59,8 +111,10 @@ body {
 .game-text::-webkit-scrollbar-track { background-color: var(--input-bg); }
 
 .input-row { display: flex; gap: 10px; margin-top: 12px; }
-.input-row input { flex: 1; padding: 12px; background: var(--input-bg); border: 2px solid var(--border-color); color: var(--text-color); }
-.input-row button { padding: 12px 18px; background: var(--text-color); color: var(--bg-color); border: none; cursor: pointer; font-weight: bold; }
+.input-row input { flex: 1; padding: 12px; background: var(--input-bg); border: 2px solid var(--border-color); color: var(--text-color); caret-color: var(--text-color); }
+.input-row input:focus { outline: none; box-shadow: 0 0 0 3px rgba(0,255,0,0.2); }
+.input-row button { padding: 12px 18px; background: var(--text-color); color: var(--bg-color); border: none; cursor: pointer; font-weight: bold; box-shadow: 0 0 10px rgba(0,255,0,0.3); }
+.input-row button:hover { box-shadow: 0 0 14px rgba(0,255,0,0.45); }
 
 .modal { position: fixed; inset: 0; display: grid; place-items: center; z-index: 1000; }
 .modal-backdrop { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); }
@@ -78,3 +132,8 @@ body {
   body { font-size: 16px; }
   .command-box { min-height: 48px; padding: 10px; }
 }
+
+/* Animations */
+@keyframes pulse { 0%, 100% { box-shadow: 0 0 6px #00ff00; opacity: 0.9; } 50% { box-shadow: 0 0 14px #00ff00; opacity: 1; } }
+@keyframes glitchShift { 0%, 100% { transform: translate(0,0); } 5% { transform: translate(1px, 0); } 10% { transform: translate(-1px, 0); } 15% { transform: translate(2px, 0); } 20% { transform: translate(-2px, 0); } 25% { transform: translate(0,0); } }
+@keyframes flicker { 0% { opacity: 0.15; } 50% { opacity: 0.25; } 100% { opacity: 0.15; } }
